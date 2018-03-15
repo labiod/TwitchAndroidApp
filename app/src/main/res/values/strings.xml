@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TwitchApp</string>
+    <string name="get_user_info">User info</string>
+    <string name="get_stream_info">Stream info</string>
+    <string name="get_channel_info">Channel info</string>
+    <string name="user_id_text">User id : %1$d</string>
+</resources>
