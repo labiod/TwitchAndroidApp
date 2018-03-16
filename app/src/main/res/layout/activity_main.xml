@@ -6,6 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.kgb.twitchapp.MainActivity">
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/user_image"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/user_image"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/get_user_info"
@@ -15,7 +35,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/get_user_info"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/user_image"/>
 
     <Button
         android:id="@+id/get_channel_info"
@@ -27,7 +47,7 @@
         android:text="@string/get_channel_info"
         app:layout_constraintEnd_toStartOf="@+id/get_stream_info"
         app:layout_constraintStart_toEndOf="@+id/get_user_info"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/user_image"/>
 
     <Button
         android:id="@+id/get_stream_info"
@@ -37,7 +57,39 @@
         android:layout_marginTop="8dp"
         android:text="@string/get_stream_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/user_image"/>
+
+    <Button
+        android:id="@+id/get_top_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/get_top_game"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/get_user_info"/>
+
+    <Button
+        android:id="@+id/get_user_follows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/get_user_follows"
+        app:layout_constraintEnd_toStartOf="@+id/get_user_followers"
+        app:layout_constraintStart_toEndOf="@id/get_top_game"
+        app:layout_constraintTop_toBottomOf="@id/get_user_info"/>
+
+    <Button
+        android:id="@+id/get_user_followers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/get_user_follows"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/get_user_info"/>
 
     <TextView
         android:id="@+id/info_view"
@@ -49,6 +101,6 @@
         android:inputType="textMultiLine"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_user_info"/>
+        app:layout_constraintTop_toBottomOf="@+id/get_top_game"/>
 
 </android.support.constraint.ConstraintLayout>

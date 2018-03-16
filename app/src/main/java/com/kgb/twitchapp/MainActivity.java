@@ -7,10 +7,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.kgb.twitchapp.endpoint.TwitchService;
+import com.kgb.twitchapp.api.endpoint.TwitchService;
 import com.kgb.twitchapp.model.TwitchChannel;
+import com.kgb.twitchapp.model.TwitchGame;
 import com.kgb.twitchapp.model.TwitchStream;
+import com.kgb.twitchapp.model.TwitchTopGames;
 import com.kgb.twitchapp.model.TwitchUser;
+import com.kgb.twitchapp.model.TwitchUserFollows;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends Activity {
     public static final String TAG = MainActivity.class.getSimpleName();
-    private static final String TWITCH_BASE_URL = "https://api.twitch.tv/kraken/";
+    private static final String TWITCH_BASE_URL = "https://api.twitch.tv/";
     public static final String TEST_USER_NAME = "labiod";
 
     private long mId = 0;
@@ -83,6 +86,68 @@ public class MainActivity extends Activity {
                         builder.append("\ngame :").append(channel.getGame());
                         builder.append("\nstatus :").append(channel.getStatus());
                         info.setText(builder.toString());
+                    });
+        });
+
+        Button topGamesButton = findViewById(R.id.get_top_game);
+        topGamesButton.setOnClickListener(v -> {
+            Observable<TwitchTopGames> observable = service.topGame(getString(R.string.twitch_client_id));
+            observable
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(topGames -> {
+                        StringBuilder builder = new StringBuilder();
+                        for (TwitchGame game : topGames.getData()) {
+                            builder.append("\n[").append(game.getId()).append("]");
+                            builder.append("Name:").append(game.getName());
+                            builder.append("\nart url:").append(game.getArtUrl())
+                                    .append("\n*****************");
+                        }
+                        info.setText(builder.toString());
+                    });
+        });
+
+        Button userFollowsButtons = findViewById(R.id.get_user_follows);
+        userFollowsButtons.setOnClickListener(v -> {
+            Observable<TwitchUserFollows> observable = service.userFollows(getString(R.string.twitch_client_id), mId);
+            observable
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(userFollows-> {
+                        StringBuilder builder = new StringBuilder();
+                        Log.d(TAG, "onCreate: total:" + userFollows.getTotal());
+                        for (TwitchUserFollows.TwitchFollow game : userFollows.getFollows()) {
+                            builder.append("[ from:")
+                                    .append(game.getFromId())
+                                    .append(" to")
+                                    .append(game.getToId())
+                                    .append("]\n");
+                        }
+                        info.setText(builder.toString());
+                    }, e -> {
+                        Log.e(TAG, "exception:", e);
+                    });
+        });
+
+        Button followersButtons = findViewById(R.id.get_user_followers);
+        followersButtons.setOnClickListener(v -> {
+            Observable<TwitchUserFollows> observable = service.userFollowers(getString(R.string.twitch_client_id), mId);
+            observable
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(userFollows-> {
+                        StringBuilder builder = new StringBuilder();
+                        Log.d(TAG, "onCreate: total:" + userFollows.getTotal());
+                        for (TwitchUserFollows.TwitchFollow game : userFollows.getFollows()) {
+                            builder.append("[ from:")
+                                    .append(game.getFromId())
+                                    .append(" to")
+                                    .append(game.getToId())
+                                    .append("]\n");
+                        }
+                        info.setText(builder.toString());
+                    }, e -> {
+                        Log.e(TAG, "exception:", e);
                     });
         });
 
