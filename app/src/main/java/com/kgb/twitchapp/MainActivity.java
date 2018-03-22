@@ -24,7 +24,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends Activity {
     public static final String TAG = MainActivity.class.getSimpleName();
     private static final String TWITCH_BASE_URL = "https://api.twitch.tv/";
-    public static final String TEST_USER_NAME = "labiod";
 
     private long mId = 0;
 
@@ -41,8 +40,9 @@ public class MainActivity extends Activity {
         TwitchService service = retrofit.create(TwitchService.class);
         TextView info = findViewById(R.id.info_view);
         Button userInfo = findViewById(R.id.get_user_info);
+        String userName = getString(R.string.twitch_user_name);
         userInfo.setOnClickListener(v -> {
-            Observable<TwitchUser> observable = service.userInfo(getString(R.string.twitch_client_id), TEST_USER_NAME);
+            Observable<TwitchUser> observable = service.userInfo(getString(R.string.twitch_client_id), userName);
             observable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 
         Button channelInfo = findViewById(R.id.get_channel_info);
         channelInfo.setOnClickListener(v -> {
-            Observable<TwitchChannel> observable = service.channelInfo(getString(R.string.twitch_client_id), TEST_USER_NAME);
+            Observable<TwitchChannel> observable = service.channelInfo(getString(R.string.twitch_client_id), userName);
             observable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

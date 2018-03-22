@@ -10,6 +10,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "twitch_client_id", (project.findProperty("TWITCH_CLIENT_ID") ?: "")
+        resValue "string", "twitch_user_name", (project.findProperty("TWITCH_USER_NAME") ?: "")
     }
     buildTypes {
         release {

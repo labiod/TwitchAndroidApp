@@ -16,3 +16,4 @@ org.gradle.jvmargs=-Xmx1536m
 # http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
 # org.gradle.parallel=true
 TWITCH_CLIENT_ID=[YOUR_CLIENT_ID]
+TWITCH_USER_NAME=[YOUR_USER_NAME]
